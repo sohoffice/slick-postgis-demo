@@ -13,9 +13,6 @@ import slick.jdbc.JdbcProfile
 trait BasePlaySpec extends BaseSpec with GuiceOneAppPerSuite with BeforeAndAfterEach {
 
   override val fakeApplication: Application = new GuiceApplicationBuilder()
-    //
-    // Test configuration can be found in `test/resources/application.conf`
-    //
     .in(Mode.Test)
     .bindings(new EvolutionsModule)
     .build

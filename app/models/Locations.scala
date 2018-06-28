@@ -1,6 +1,6 @@
 package models
 
-import models.jdbc.GeoJdbcTypes.Point
+import models.jdbc.Point
 import models.jdbc.PostgisProfile.api._
 import slick.lifted.Rep
 
