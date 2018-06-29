@@ -5,9 +5,14 @@ import slick.ast.{BaseTypedType, NumericTypedType, ScalaBaseType, ScalaType, Typ
 
 import scala.reflect.ClassTag
 
-trait GeoTypedType
-
-class GeoScalaType[T](implicit val classTag: ClassTag[T]) extends ScalaType[T] with BaseTypedType[T] {
+/** We do not want Point to be Ordered, actually we do not know what's the right order for Points.
+  *
+  * As a result we extends ScalaType rather that ScalaBaseType.
+  *
+  * @param classTag
+  * @tparam T
+  */
+class PointScalaType[T](implicit val classTag: ClassTag[T]) extends ScalaType[T] with BaseTypedType[T] {
   override def nullable: Boolean = true
 
   override def ordered: Boolean = false
@@ -17,12 +22,8 @@ class GeoScalaType[T](implicit val classTag: ClassTag[T]) extends ScalaType[T] w
   }
 }
 
-class PointType[T](val p: Point => T)(implicit tag: ClassTag[T])
-  extends GeoScalaType[T]()(tag) with GeoTypedType {
-}
-
 object GeoTypes {
-  implicit val pointType = new GeoScalaType[Point]()
+  implicit val pointType = new PointScalaType[Point]()
 }
 
 case class Point(

@@ -11,14 +11,18 @@ import slick.jdbc.{JdbcProfile, JdbcType, JdbcTypesComponent}
 trait GeoJdbcTypesComponent extends JdbcTypesComponent {
   self: JdbcProfile =>
 
-  /** Every time we read or write database of Point type, we need to use PGgeometry.
-    * A Shape along won't help us, as it simply handles the query.
+  /** We'll use the PGgeometry object supplied by postgis-jdbc project to access the database.
+    * It can be used by using the standard JDBC interface: getObject() and setObject().
     *
-    * We need supply a JdbcType to the driver.
+    * To use the PGgeometry object, we must provide a DriverJdbcType to slick.
     *
-    * All related tables must import our new profile rather than the default PostgresProfile.api._
+    * All related tables must now import our new profile rather than the default PostgresProfile.api._
+    *
+    * ```
+    * import models.jdbc.PostgisProfile.api._
+    * ```
     */
-  class PointDriverJdbcType extends DriverJdbcType[Point] with GeoTypedType {
+  class PointDriverJdbcType extends DriverJdbcType[Point] {
     override def sqlType: Int = java.sql.Types.OTHER
 
     override def setValue(v: Point, p: PreparedStatement, idx: Int): Unit = {
