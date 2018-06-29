@@ -17,11 +17,23 @@ The other relevant dependencies are as below:
 
 The test runs on JDK 1.8, scala 2.12.2. Using postgresql 10 + PostGis 2.4.
 
+
 ## Preparation
 
 We need to have a postgresql database with postgis installed.
 
 Install vagrant and use `vagrant up` to provision a testing postgresql.
+
+The test postgresql runs on host 168.95.56.98. Use the below credential to manage.
+
+- username: `postgres`
+- password: `postgres`
+
+If you need SSH access, use the below
+
+- username: `vagrant`
+- password: `vagrant`
+- Or simply run `vagrant ssh` from command line.
 
 Manually prepare the database by creating a new user and database.
 
@@ -36,6 +48,7 @@ CREATE EXTENSION postgis;
 
 If you wish to use an existing postgresql database, please change
 `conf/application.conf` accordingly.
+
 
 ## Running
 
