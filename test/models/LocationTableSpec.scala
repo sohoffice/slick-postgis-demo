@@ -109,5 +109,28 @@ class LocationTableSpec extends BasePlaySpec with BeforeAndAfterEach {
         fail("location not found")
     }
   }
+  it should "update records" in {
+    import models.tables.LocationTables._
+    val action = locationQuery += (
+      5, "", Point(0, 0), Some(Point(25, 25))
+    )
+    db.run(action) flatMap { _ =>
+      val updates = locationQuery
+        .filter(_.location === Point(0, 0))
+        .map(x => (x.location, x.optionLocation))
+        .update((Point(1, 1), None))
+
+      db.run(updates.transactionally)
+    } flatMap { _ =>
+      val query = locationQuery.map(_.model)
+      db.run(query.result.map(_.headOption))
+    } map {
+      case Some(loc) =>
+        loc.location should ===(Point(1, 1))
+        loc.optionLocation shouldBe 'empty
+      case _ =>
+        fail("location not found")
+    }
+  }
 
 }

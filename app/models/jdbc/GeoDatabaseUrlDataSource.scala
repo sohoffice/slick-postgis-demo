@@ -10,7 +10,8 @@ class GeoDatabaseUrlDataSource extends DatabaseUrlDataSource {
   override def getConnection(): Connection = {
     val c = super.getConnection()
     val cls = Class.forName("org.postgis.PGgeometry").asInstanceOf[Class[PGgeometry]]
-    c.asInstanceOf[PGConnection].addDataType("geography", cls)
+    val pgconn = c.asInstanceOf[PGConnection]
+    pgconn.addDataType("geography", cls)
     logger.trace(s"Added geography data type to connection: $c")
     c
   }

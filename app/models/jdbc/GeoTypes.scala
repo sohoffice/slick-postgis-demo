@@ -8,7 +8,7 @@ import scala.reflect.ClassTag
 trait GeoTypedType
 
 class GeoScalaType[T](implicit val classTag: ClassTag[T]) extends ScalaType[T] with BaseTypedType[T] {
-  override def nullable: Boolean = false
+  override def nullable: Boolean = true
 
   override def ordered: Boolean = false
 

@@ -21,8 +21,6 @@ trait GeoJdbcTypesComponent extends JdbcTypesComponent {
   class PointDriverJdbcType extends DriverJdbcType[Point] with GeoTypedType {
     override def sqlType: Int = java.sql.Types.OTHER
 
-    override def sqlTypeName(sym: Option[FieldSymbol]): String = "geometry"
-
     override def setValue(v: Point, p: PreparedStatement, idx: Int): Unit = {
       val g = new PGgeometry(new org.postgis.Point(v.lon.doubleValue(), v.lat.doubleValue()))
       p.setObject(idx, g)
