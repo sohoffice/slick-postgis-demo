@@ -4,9 +4,7 @@ import models.jdbc.Point
 import models.jdbc.PostgisProfile.api._
 import org.scalatest.BeforeAndAfterEach
 import org.slf4j.LoggerFactory
-import tests.{BasePlaySpec, BaseSpec}
-
-import org.scalatest.Matchers._
+import tests.BasePlaySpec
 
 class LocationTableSpec extends BasePlaySpec with BeforeAndAfterEach {
 
